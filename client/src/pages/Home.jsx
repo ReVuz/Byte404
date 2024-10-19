@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { BarChart, Users, MapPin, List, User, LogOut } from "lucide-react";
+import { Users, MapPin, List, LogOut } from "lucide-react";
 
 export default function Home() {
   const [tasks, setTasks] = useState([

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,10 +7,12 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Home as HomeIcon, ListTodo, User } from "lucide-react";
+
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Task from "./pages/Task";
 import Profile from "./pages/Profile";
+import MainPage from "./pages/MainPage";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,6 +40,7 @@ const App = () => {
             path="/"
             element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
           />
+          <Route path="/home" element={<MainPage />} />
           <Route
             path="/task"
             element={isAuthenticated ? <Task /> : <Navigate to="/login" />}
