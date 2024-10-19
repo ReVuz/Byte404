@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Blacklisted';
+  src: url('./assets/blacklisted.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'champaign';
+  src: url('./assets/champagne_limousines/Champagne & Limousines.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
