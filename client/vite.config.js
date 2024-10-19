@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'React + Vite PWA',
         short_name: 'ReactPWA',
         description: 'A React PWA using Vite and TailwindCSS',
-        theme_color: '#ffffff',
+        theme_color: '#fff',
         icons: [
           {
             src: 'pwa-192x192.png',
