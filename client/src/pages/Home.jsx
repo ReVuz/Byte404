@@ -19,7 +19,13 @@ export default function Home() {
     },
     { id: 3, name: "Gym workout", date: "2023-05-17", location: "Gym" },
   ]);
+  const handleGetStarted = () => {
+    // Option 1: Using window.location (works without any routing library)
+    window.location.href = "/home";
 
+    // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
+    // navigate('/login');
+  };
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Main content */}
@@ -29,7 +35,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
             <button className="text-gray-500 hover:text-gray-700">
-              <LogOut size={20} />
+              <LogOut size={20} onClick={handleGetStarted} />
             </button>
           </div>
         </header>
