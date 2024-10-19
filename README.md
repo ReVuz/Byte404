@@ -1,8 +1,8 @@
 # Geo-Location Based Task Reminder App/Bot
 
-In today's busy world, we often have tasks scattered across different locations, making it difficult to remember and complete them on time. Our project aims to solve this issue by creating a geo-location-based reminder app (or Telegram bot) that helps users manage and complete their tasks more efficiently by tagging them to specific locations.
+#### In today's busy world, we often have tasks scattered across different locations, making it difficult to remember and complete them on time. Our project aims to solve this issue by creating a geo-location-based reminder app (or Telegram bot) that helps users manage and complete their tasks more efficiently by tagging them to specific locations.
 
-## Problem: Imagine you have 3 tasks to complete in your college and 2 tasks on your way to school. Due to the hectic nature of life, it’s easy to forget some of these tasks. Failing to complete them on time might result in missed deadlines or incomplete errands.
+### Problem: Imagine you have 3 tasks to complete in your college and 2 tasks on your way to school. Due to the hectic nature of life, it’s easy to forget some of these tasks. Failing to complete them on time might result in missed deadlines or incomplete errands.
 
 # Solution: With our app or bot, users can:
 
