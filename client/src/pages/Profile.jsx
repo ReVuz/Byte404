@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Mail, Phone, Calendar, Edit } from 'lucide-react'
 
@@ -6,13 +7,54 @@ export default function Profile() {
     name: 'Jane Doe',
     email: 'jane.doe@example.com',
     phone: '+1 (555) 123-4567',
-    location: 'New York, NY',
     joinDate: 'January 2023',
     avatar: '/placeholder-avatar.jpg',
     completedTasks: 42,
     ongoingTasks: 5,
   }
 
+  // Helper function to truncate coordinates
+function truncateCoordinate(coord) {
+  return Math.floor(coord * 100000) / 100000
+}
+  const [location, setLocation] = useState({ latitude: null, longitude: null })
+  const [prevLocation, setPrevLocation] = useState({ latitude: null, longitude: null })
+
+  // Function to get the current location of the user
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.watchPosition(
+        (position) => {
+          const latitude = truncateCoordinate(position.coords.latitude)
+          const longitude = truncateCoordinate(position.coords.longitude)
+
+          // Compare with previous location truncated values
+          if (
+            latitude !== prevLocation.latitude ||
+            longitude !== prevLocation.longitude
+          ) {
+            // Update location only if it has changed
+            setLocation({ latitude, longitude })
+            setPrevLocation({ latitude, longitude })
+
+            // Make your API call here, as location has changed
+            console.log(`New Location: Latitude: ${latitude}, Longitude: ${longitude}`)
+            // fetch your API with the new location here...
+          }
+        },
+        (error) => {
+          console.error('Error getting location:', error)
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      )
+    } else {
+      console.error('Geolocation is not supported by this browser.')
+    }
+  }
+
+  useEffect(() => {
+    getLocation() // Start getting location when the component mounts
+  }, [])
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
@@ -53,7 +95,11 @@ export default function Profile() {
                 <dt className="text-sm font-medium text-gray-500">Location</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 flex items-center">
                   <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                  {user.location}
+                  {location.latitude && location.longitude ? (
+                    <span>{`Latitude: ${location.latitude}, Longitude: ${location.longitude}`}</span>
+                  ) : (
+                    'Fetching location...'
+                  )}
                 </dd>
               </div>
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
