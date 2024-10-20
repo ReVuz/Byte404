@@ -1,24 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Users, MapPin, List, LogOut } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      name: "Complete project proposal",
-      date: "2023-05-15",
-      location: "Office",
-    },
-    {
-      id: 2,
-      name: "Buy groceries",
-      date: "2023-05-16",
-      location: "Supermarket",
-    },
-    { id: 3, name: "Gym workout", date: "2023-05-17", location: "Gym" },
-  ]);
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const [tasks, setTasks] = useState([]);
+
+useEffect(() => {
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch(
+        `https://byte404.onrender.com/api/tasks/user/1234`
+      );
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log(data);
+      const formattedTasks = data.map(task => ({
+        id: task.task_id,
+        name: task.task_description,
+        date: new Date(task.created_at).toLocaleDateString(),
+        location: `${task.location.latitude}, ${task.location.longitude}`
+      }));
+      setTasks(formattedTasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+
+  fetchTasks();
+}, []);
+
+
   const handleGetStarted = () => {
     // Option 1: Using window.location (works without any routing library)
     window.location.href = "/home";
@@ -26,6 +42,7 @@ export default function Home() {
     // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
     // navigate('/login');
   };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Main content */}
@@ -33,7 +50,7 @@ export default function Home() {
         {/* Header */}
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
+            <h1 className="text-2xl font-semibold text-gray-900">Task Trail</h1>
             <button className="text-gray-500 hover:text-gray-700">
               <LogOut size={20} onClick={handleGetStarted} />
             </button>
@@ -60,7 +77,7 @@ export default function Home() {
                           Total Tasks
                         </dt>
                         <dd className="text-3xl font-semibold text-gray-900">
-                          12
+                          {tasks.length}
                         </dd>
                       </dl>
                     </div>
@@ -82,7 +99,8 @@ export default function Home() {
                           Completed Tasks
                         </dt>
                         <dd className="text-3xl font-semibold text-gray-900">
-                          8
+                          {/* Replace with dynamic count if available */}
+                          0
                         </dd>
                       </dl>
                     </div>
@@ -104,7 +122,8 @@ export default function Home() {
                           Location-based Tasks
                         </dt>
                         <dd className="text-3xl font-semibold text-gray-900">
-                          5
+                          {/* Replace with dynamic count if available */}
+                          0
                         </dd>
                       </dl>
                     </div>

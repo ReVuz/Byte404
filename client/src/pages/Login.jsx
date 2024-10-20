@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import "../lib/styles.css";
 
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function Login({ onLogin }) {
   }, [onLogin, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-200 via-pink-200 to-red-200">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-500 via-pink-200 to-red-200">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,10 +27,18 @@ export default function Login({ onLogin }) {
         <h2 className="text-3xl font-bold mb-6 text-gray-800">
           Welcome to Task Trail
         </h2>
-        <p className="text-lg text-gray-600 mb-4">
-          Logging in...
-        </p>
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
+        <p className="text-lg text-gray-600 mb-4">Logging in...</p>
+        <div className="hourglassBackground">
+          <div className="hourglassContainer">
+            <div className="hourglassCurves"></div>
+            <div className="hourglassCapTop"></div>
+            <div className="hourglassGlassTop"></div>
+            <div className="hourglassSand"></div>
+            <div className="hourglassSandStream"></div>
+            <div className="hourglassCapBottom"></div>
+            <div className="hourglassGlass"></div>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
