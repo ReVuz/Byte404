@@ -1,168 +1,180 @@
+import React from "react";
+import { Auth0Context, useAuth0 } from "@auth0/auth0-react";
 import { Timeline } from "../lib/Scroll";
-import "../lib/styles.css";
-import Login from "./Login";
+import { motion } from "framer-motion";
+import { FaMapMarkerAlt, FaBell, FaCheckCircle } from "react-icons/fa";
 
 export default function MainPage() {
+  const { loginWithRedirect } = useAuth0();
+
   const data = [
     {
-      title: "Late yesterday",
+      title: "Welcome to Task Trail",
       content: (
-        <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            All your remainders when you reach. Even to the top of mountain to the deep of the sea.
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="text-neutral-800 dark:text-neutral-200 text-sm md:text-base font-normal mb-8">
+            Your personal task manager that follows you everywhere. From mountain peaks to ocean depths, we've got you covered.
           </p>
           <div className="grid grid-cols-2 gap-4">
-            <img
-              src="https://assets.aceternity.com/templates/startup-1.webp"
-              alt="startup template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src=".\src\assets\Screenshot 2024-10-20 090915.png"
+              alt="Task Trail on mobile"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
             />
-            <img
-              src="https://assets.aceternity.com/templates/startup-2.webp"
-              alt="startup template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
-            />
-            <img
-              src="https://assets.aceternity.com/templates/startup-3.webp"
-              alt="startup template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
-            />
-            <img
-              src="https://assets.aceternity.com/templates/startup-4.webp"
-              alt="startup template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src=".\src\assets\Screenshot 2024-10-20 090936.png"
+              alt="Task Trail dashboard"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
             />
           </div>
-        </div>
+        </motion.div>
       ),
     },
     {
-      title: "Early Today",
+      title: "Nearby Tasks",
       content: (
-        <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            Reach the desired location without getting concerned of forgetting.
-          </p>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            Without worries of the way you go, reach your tasks before you reach them.
-          </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <div className="flex items-center mb-4">
+            <FaMapMarkerAlt className="text-blue-500 mr-2" />
+            <p className="text-neutral-800 dark:text-neutral-200 text-sm md:text-base font-normal">
+              Discover and complete tasks in your vicinity.
+            </p>
+          </div>
           <div className="grid grid-cols-2 gap-4">
-            <img
-              src="https://assets.aceternity.com/pro/hero-sections.png"
-              alt="hero template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src=".\src\assets\Screenshot 2024-10-20 090915.png"
+              alt="Nearby tasks view"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
             />
-            <img
-              src="https://assets.aceternity.com/features-section.png"
-              alt="feature template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
-            />
-            <img
-              src="https://assets.aceternity.com/pro/bento-grids.png"
-              alt="bento template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
-            />
-            <img
-              src="https://assets.aceternity.com/cards.png"
-              alt="cards template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src=".\src\assets\Screenshot 2024-10-20 090936.png"
+              alt="Task details"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
             />
           </div>
-        </div>
+        </motion.div>
       ),
     },
     {
-      title: "Changelog",
+      title: "Geofence Alerts",
       content: (
-        <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
-            Deployed 5 new components on Aceternity today
-          </p>
-          <div className="mb-8">
-            <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Card grid component
-            </div>
-            <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Startup template Aceternity
-            </div>
-            <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Random file upload lol
-            </div>
-            <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Himesh Reshammiya Music CD
-            </div>
-            <div className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-xs md:text-sm">
-              ✅ Salman Bhai Fan Club registrations open
-            </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="flex items-center mb-4">
+            <FaBell className="text-yellow-500 mr-2" />
+            <p className="text-neutral-800 dark:text-neutral-200 text-sm md:text-base font-normal">
+              Get notified about tasks when you enter specific areas.
+            </p>
+          </div>
+          <div className="mb-8 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+            <motion.div whileHover={{ x: 5 }} className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-sm mb-2">
+              📍 Task at Park Avenue
+            </motion.div>
+            <motion.div whileHover={{ x: 5 }} className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-sm mb-2">
+              📍 Task near Ocean Beach
+            </motion.div>
+            <motion.div whileHover={{ x: 5 }} className="flex gap-2 items-center text-neutral-700 dark:text-neutral-300 text-sm">
+              📍 Task by Downtown Office
+            </motion.div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <img
-              src="https://assets.aceternity.com/pro/hero-sections.png"
-              alt="hero template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src=".\src\assets\Screenshot 2024-10-20 090943.png"
+              alt="Geofence map"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
             />
-            <img
-              src="https://assets.aceternity.com/features-section.png"
-              alt="feature template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
-            />
-            <img
-              src="https://assets.aceternity.com/pro/bento-grids.png"
-              alt="bento template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
-            />
-            <img
-              src="https://assets.aceternity.com/cards.png"
-              alt="cards template"
-              width={500}
-              height={500}
-              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src=".\src\assets\Screenshot 2024-10-20 090936.png"
+              alt="Geofence settings"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
             />
           </div>
-        </div>
+        </motion.div>
+      ),
+    },
+    {
+      title: "Completed Tasks",
+      content: (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <div className="flex items-center mb-4">
+            <FaCheckCircle className="text-green-500 mr-2" />
+            <p className="text-neutral-800 dark:text-neutral-200 text-sm md:text-base font-normal">
+              Track your accomplishments based on your location history.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src="https://assets.aceternity.com/pro/bento-grids.png"
+              alt="Completed tasks overview"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
+            />
+            <motion.img
+              whileHover={{ scale: 1.05 }}
+              src="https://assets.aceternity.com/cards.png"
+              alt="Task completion details"
+              className="rounded-lg object-cover h-32 md:h-56 lg:h-72 w-half shadow-lg"
+            />
+          </div>
+        </motion.div>
       ),
     },
   ];
-  const handleGetStarted = () => {
-    // Option 1: Using window.location (works without any routing library)
-    window.location.href = "/login";
-
-    // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
-    // navigate('/login');
-  };
+  
   return (
-    <div className="w-full relative">
-      <div className="absolute top-4 right-4 z-10">
-        <button
-          onClick={handleGetStarted}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-        >
-          Get Started
-        </button>
-      </div>
-      <Timeline data={data} />
+    <div className="w-full relative bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen">
+      <nav className="absolute top-0 left-0 right-0 z-10 bg-white dark:bg-gray-800 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex-shrink-0 flex items-center">
+              <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">Task Trail</span>
+            </div>
+            <div className="flex items-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => loginWithRedirect()}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Get Started
+              </motion.button>              
+            </div>
+          </div>
+        </div>
+      </nav>
+      
+      <main className="pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <Timeline data={data} />
+      </main>
+      
+      <footer className="bg-white dark:bg-gray-800 shadow-md mt-12">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
+            © 2024 Task Trail. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

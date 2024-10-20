@@ -27,14 +27,19 @@ const App = () => {
       <div className="flex flex-col min-h-screen bg-gray-100">
         <Routes>
           <Route
-            path="/login"
+            path="/home"
             element={
-              isAuthenticated ? (
-                <Navigate to="/" />
-              ) : (
-                <Login onLogin={handleLogin} />
-              )
+              <MainPage/>
+              // isAuthenticated ? (
+                
+              // ) : (
+              //   <Login onLogin={handleLogin} />
+              // )
             }
+          />
+          <Route
+            path="/login"
+            element={<Login onLogin={handleLogin}/>}
           />
           <Route
             path="/"
