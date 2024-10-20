@@ -1,8 +1,18 @@
 import { Timeline } from "../lib/Scroll";
-import "../lib/styles.css";
 import Login from "./Login";
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 export default function MainPage() {
+  const handleGetStarted = () => {
+    // Option 1: Using window.location (works without any routing library)
+    window.location.href = "/Login";
+
+    // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
+    // navigate('/login');
+  };
+  const { loginWithRedirect } = useAuth0();
   const data = [
     {
       title: "2024",
@@ -147,18 +157,12 @@ export default function MainPage() {
       ),
     },
   ];
-  const handleGetStarted = () => {
-    // Option 1: Using window.location (works without any routing library)
-    window.location.href = "/login";
-
-    // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
-    // navigate('/login');
-  };
+  
   return (
     <div className="w-full relative">
       <div className="absolute top-4 right-4 z-10">
         <button
-          onClick={handleGetStarted}
+          onClick={() => loginWithRedirect()}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
         >
           Get Started
