@@ -3,11 +3,15 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/UserRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const cors = require('cors');
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(cors({
+  origin: 'https://byte404.vercel.app', 
+}));
 
 mongoose
   .connect(process.env.MONGO_URI, {

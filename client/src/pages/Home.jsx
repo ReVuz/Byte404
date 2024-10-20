@@ -8,25 +8,32 @@ export default function Home() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [tasks, setTasks] = useState([]);
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await fetch("https://byte404.onrender.com/api/tasks/user/1234");
-        const data = await response.json();
-        const formattedTasks = data.map(task => ({
-          id: task.task_id,
-          name: task.task_description,
-          date: new Date(task.created_at).toLocaleDateString(), // Format the date
-          location: `${task.location.latitude}, ${task.location.longitude}` // Combine latitude and longitude
-        }));
-        setTasks(formattedTasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
+useEffect(() => {
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch(
+        `https://byte404.onrender.com/api/tasks/user/1234`
+      );
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      const data = await response.json();
+      console.log(data);
+      const formattedTasks = data.map(task => ({
+        id: task.task_id,
+        name: task.task_description,
+        date: new Date(task.created_at).toLocaleDateString(),
+        location: `${task.location.latitude}, ${task.location.longitude}`
+      }));
+      setTasks(formattedTasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
 
-    fetchTasks();
-  }, []);
+  fetchTasks();
+}, []);
+
 
   const handleGetStarted = () => {
     // Option 1: Using window.location (works without any routing library)
