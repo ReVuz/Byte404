@@ -1,6 +1,4 @@
 import axios from 'axios'
-import dotenv from 'dotenv'
-dotenv.config()
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API
 
@@ -20,7 +18,7 @@ interface GeminiResponse {
 export async function getCoordinatesFromGemini(placeName: string, customPrompt: string): Promise<{ lat: number, lng: number }> {
   try {
     const prompt = `Given the place name:- "${placeName}" and the prompt description :- "${customPrompt}", provide the latitude and longitude coordinates in decimal format, accurate to 2 decimal places based on the . Return only the numbers in the format: latitude,longitude`
-
+ 
     const response = await axios.post<GeminiResponse>(
       GEMINI_API_URL,
       {
