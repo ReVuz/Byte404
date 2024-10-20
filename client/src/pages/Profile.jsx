@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Mail, Phone, Calendar, Edit } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 export default function Profile() {
+
   const user = {
     name: "Jane Doe",
     email: "jane.doe@example.com",

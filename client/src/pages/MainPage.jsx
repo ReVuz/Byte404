@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
 export default function MainPage() {
+  
   const handleGetStarted = () => {
     // Option 1: Using window.location (works without any routing library)
     window.location.href = "/Login";

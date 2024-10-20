@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Clock } from "lucide-react";
-import { getCoordinatesFromGemini } from "./geminiApi";
+import axios from "axios";
+import { getCoordinatesFromGemini } from "./geminiApi"; // Assuming this is an external API utility
 
 export default function Task() {
   const [task, setTask] = useState({
@@ -9,15 +10,15 @@ export default function Task() {
     description: "",
     isLocationBased: false,
     placeName: "",
-    latitude: null,
-    longitude: null,
-    date: "",
-    time: "",
+    latitude: "10.0231",
+    longitude: "72.2132",
   });
+
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Fetch place suggestions based on input
   useEffect(() => {
     const getPlaceSuggestions = async () => {
       if (task.placeName) {
@@ -41,6 +42,7 @@ export default function Task() {
     getPlaceSuggestions();
   }, [task.placeName]);
 
+  // Handle place selection and fetch coordinates
   const handlePlaceSelect = async (place) => {
     setTask({ ...task, placeName: place });
     setSuggestions([]);
@@ -65,20 +67,48 @@ export default function Task() {
     }
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission and POST data to backend using axios
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically save the task to your backend
-    console.log("Task submitted:", task);
-    setTask({
-      name: "",
-      description: "",
-      isLocationBased: false,
-      placeName: "",
-      latitude: null,
-      longitude: null,
-      date: "",
-      time: "",
-    });
+
+    const taskData = {
+      task_id: new Date().toISOString(), // Use current date/time as task_id
+      user_id: "1234", // Static user_id for now
+      task_description: task.description,
+      task_type: task.isLocationBased ? "location-specific" : "general",
+      location: task.isLocationBased
+        ? {
+            placeName: task.placeName,
+            latitude: task.latitude,
+            longitude: task.longitude,
+          }
+        : null,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://byte404.onrender.com/api/tasks/",
+        taskData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Task submitted successfully:", response.data);
+
+      // Reset the form after successful submission
+      setTask({
+        name: "",
+        description: "",
+        isLocationBased: false,
+        placeName: "",
+        latitude: null,
+        longitude: null,
+      });
+    } catch (error) {
+      console.error("Error submitting task:", error.response || error.message);
+    }
   };
 
   return (
@@ -193,48 +223,6 @@ export default function Task() {
                 )}
               </div>
             )}
-            <div>
-              <label
-                htmlFor="date"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Date (optional)
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Calendar className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="date"
-                  name="date"
-                  id="date"
-                  value={task.date}
-                  onChange={(e) => setTask({ ...task, date: e.target.value })}
-                  className="focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
-            </div>
-            <div>
-              <label
-                htmlFor="time"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Time (optional)
-              </label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Clock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="time"
-                  name="time"
-                  id="time"
-                  value={task.time}
-                  onChange={(e) => setTask({ ...task, time: e.target.value })}
-                  className="focus:ring-purple-500 focus:border-purple-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                />
-              </div>
-            </div>
             <div className="mt-5">
               <button
                 type="submit"

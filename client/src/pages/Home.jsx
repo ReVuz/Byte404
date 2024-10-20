@@ -1,24 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Users, MapPin, List, LogOut } from "lucide-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      name: "Complete project proposal",
-      date: "2023-05-15",
-      location: "Office",
-    },
-    {
-      id: 2,
-      name: "Buy groceries",
-      date: "2023-05-16",
-      location: "Supermarket",
-    },
-    { id: 3, name: "Gym workout", date: "2023-05-17", location: "Gym" },
-  ]);
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("https://byte404.onrender.com/api/tasks/user/1234");
+        const data = await response.json();
+        const formattedTasks = data.map(task => ({
+          id: task.task_id,
+          name: task.task_description,
+          date: new Date(task.created_at).toLocaleDateString(), // Format the date
+          location: `${task.location.latitude}, ${task.location.longitude}` // Combine latitude and longitude
+        }));
+        setTasks(formattedTasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
   const handleGetStarted = () => {
     // Option 1: Using window.location (works without any routing library)
     window.location.href = "/home";
@@ -26,6 +35,7 @@ export default function Home() {
     // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
     // navigate('/login');
   };
+
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Main content */}
@@ -60,7 +70,7 @@ export default function Home() {
                           Total Tasks
                         </dt>
                         <dd className="text-3xl font-semibold text-gray-900">
-                          12
+                          {tasks.length}
                         </dd>
                       </dl>
                     </div>
@@ -82,7 +92,8 @@ export default function Home() {
                           Completed Tasks
                         </dt>
                         <dd className="text-3xl font-semibold text-gray-900">
-                          8
+                          {/* Replace with dynamic count if available */}
+                          0
                         </dd>
                       </dl>
                     </div>
@@ -104,7 +115,8 @@ export default function Home() {
                           Location-based Tasks
                         </dt>
                         <dd className="text-3xl font-semibold text-gray-900">
-                          5
+                          {/* Replace with dynamic count if available */}
+                          0
                         </dd>
                       </dl>
                     </div>
