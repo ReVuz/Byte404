@@ -5,11 +5,11 @@ import Login from "./Login";
 export default function MainPage() {
   const data = [
     {
-      title: "2024",
+      title: "Late yesterday",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            Built and launched Aceternity UI and Aceternity UI Pro from scratch
+            All your remainders when you reach. Even to the top of mountain to the deep of the sea.
           </p>
           <div className="grid grid-cols-2 gap-4">
             <img
@@ -45,16 +45,14 @@ export default function MainPage() {
       ),
     },
     {
-      title: "Early 2023",
+      title: "Early Today",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            I usually run out of copy, but when I see content this big, I try to
-            integrate lorem ipsum.
+            Reach the desired location without getting concerned of forgetting.
           </p>
           <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            Lorem ipsum is for people who are too lazy to write copy. But we are
-            not. Here are some more example of beautiful designs I built.
+            Without worries of the way you go, reach your tasks before you reach them.
           </p>
           <div className="grid grid-cols-2 gap-4">
             <img
