@@ -1,4 +1,6 @@
-# Geo-Location Based Task Reminder App/Bot
+#Task Trails
+
+## Geo-Location Based Task Reminder App/Bot
 
 #### In today's busy world, we often have tasks scattered across different locations, making it difficult to remember and complete them on time. Our project aims to solve this issue by creating a geo-location-based reminder app (or Telegram bot) that helps users manage and complete their tasks more efficiently by tagging them to specific locations.
 
