@@ -1,90 +1,102 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { MapPin, Calendar, Clock } from 'lucide-react'
-import { getCoordinatesFromGemini } from './geminiApi'
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Calendar, Clock } from "lucide-react";
+import { getCoordinatesFromGemini } from "./geminiApi";
 
 export default function Task() {
   const [task, setTask] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     isLocationBased: false,
-    placeName: '',
+    placeName: "",
     latitude: null,
     longitude: null,
-    date: '',
-    time: '',
-  })
-  const [suggestions, setSuggestions] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
+    date: "",
+    time: "",
+  });
+  const [suggestions, setSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getPlaceSuggestions = async () => {
       if (task.placeName) {
         try {
-          const response = await fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${task.placeName}&apiKey=9161be85978f4ce488011c5ff8b77a67`)
-          const data = await response.json()
-          const suggestions = data.features.map(feature => feature.properties.formatted)
-          setSuggestions(suggestions)
+          const response = await fetch(
+            `https://api.geoapify.com/v1/geocode/autocomplete?text=${task.placeName}&apiKey=9161be85978f4ce488011c5ff8b77a67`
+          );
+          const data = await response.json();
+          const suggestions = data.features.map(
+            (feature) => feature.properties.formatted
+          );
+          setSuggestions(suggestions);
         } catch (error) {
-          setError('Failed to get place suggestions. Please try again.')
+          setError("Failed to get place suggestions. Please try again.");
         }
       } else {
-        setSuggestions([])
+        setSuggestions([]);
       }
-    }
+    };
 
-    getPlaceSuggestions()
-  }, [task.placeName])
+    getPlaceSuggestions();
+  }, [task.placeName]);
 
   const handlePlaceSelect = async (place) => {
-    setTask({ ...task, placeName: place })
-    setSuggestions([])
-    setIsLoading(true)
-    setError(null)
+    setTask({ ...task, placeName: place });
+    setSuggestions([]);
+    setIsLoading(true);
+    setError(null);
 
     try {
-      const coordinates = await getCoordinatesFromGemini(place, task.description)
-      setTask(prevTask => ({
+      const coordinates = await getCoordinatesFromGemini(
+        place,
+        task.description
+      );
+      setTask((prevTask) => ({
         ...prevTask,
         placeName: place,
         latitude: coordinates.lat,
         longitude: coordinates.lng,
-      }))
+      }));
     } catch (err) {
-      setError('Failed to get coordinates. Please try again.')
+      setError("Failed to get coordinates. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Here you would typically save the task to your backend
-    console.log('Task submitted:', task)
+    console.log("Task submitted:", task);
     setTask({
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       isLocationBased: false,
-      placeName: '',
+      placeName: "",
       latitude: null,
       longitude: null,
-      date: '',
-      time: '',
-    })
-  }
+      date: "",
+      time: "",
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div className="px-4 py-5 sm:p-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Create a New Task</h3>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            Create a New Task
+          </h3>
           <div className="mt-2 max-w-xl text-sm text-gray-500">
             <p>Enter the details of your task below.</p>
           </div>
           <form onSubmit={handleSubmit} className="mt-5 space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Task Name
               </label>
               <input
@@ -98,7 +110,10 @@ export default function Task() {
               />
             </div>
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Description
               </label>
               <textarea
@@ -106,7 +121,9 @@ export default function Task() {
                 name="description"
                 rows={3}
                 value={task.description}
-                onChange={(e) => setTask({ ...task, description: e.target.value })}
+                onChange={(e) =>
+                  setTask({ ...task, description: e.target.value })
+                }
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
                 required
               />
@@ -117,16 +134,24 @@ export default function Task() {
                 name="location-based"
                 type="checkbox"
                 checked={task.isLocationBased}
-                onChange={(e) => setTask({ ...task, isLocationBased: e.target.checked })}
+                onChange={(e) =>
+                  setTask({ ...task, isLocationBased: e.target.checked })
+                }
                 className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
               />
-              <label htmlFor="location-based" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="location-based"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 Location-based task
               </label>
             </div>
             {task.isLocationBased && (
               <div>
-                <label htmlFor="placeName" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="placeName"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Location
                 </label>
                 <div className="relative">
@@ -135,7 +160,9 @@ export default function Task() {
                     name="placeName"
                     id="placeName"
                     value={task.placeName}
-                    onChange={(e) => setTask({ ...task, placeName: e.target.value })}
+                    onChange={(e) =>
+                      setTask({ ...task, placeName: e.target.value })
+                    }
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
                     required={task.isLocationBased}
                   />
@@ -153,7 +180,11 @@ export default function Task() {
                     </ul>
                   )}
                 </div>
-                {isLoading && <p className="mt-2 text-sm text-gray-500">Loading coordinates...</p>}
+                {isLoading && (
+                  <p className="mt-2 text-sm text-gray-500">
+                    Loading coordinates...
+                  </p>
+                )}
                 {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
                 {task.latitude && task.longitude && (
                   <p className="mt-2 text-sm text-gray-500">
@@ -163,7 +194,10 @@ export default function Task() {
               </div>
             )}
             <div>
-              <label htmlFor="date" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Date (optional)
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -181,7 +215,10 @@ export default function Task() {
               </div>
             </div>
             <div>
-              <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="time"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Time (optional)
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -210,5 +247,5 @@ export default function Task() {
         </div>
       </div>
     </div>
-  )
+  );
 }
