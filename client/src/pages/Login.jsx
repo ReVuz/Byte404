@@ -27,7 +27,7 @@ export default function Login({ onLogin }) {
           Welcome to Task Trail
         </h2>
         <p className="text-lg text-gray-600 mb-4">
-          Bypassing login for development...
+          Logging in...
         </p>
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
       </motion.div>
