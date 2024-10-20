@@ -5,7 +5,7 @@ import { Users, MapPin, List, LogOut } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Home() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { logout,user, isAuthenticated, isLoading } = useAuth0();
   const [tasks, setTasks] = useState([]);
 
 useEffect(() => {
@@ -36,8 +36,13 @@ useEffect(() => {
 
 
   const handleGetStarted = () => {
+    localStorage.clear();
+    sessionStorage.clear();
     // Option 1: Using window.location (works without any routing library)
-    window.location.href = "/home";
+    logout({
+      returnTo: window.location.origin = "/home",
+    });
+    
 
     // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
     // navigate('/login');
