@@ -15,12 +15,12 @@ import Profile from "./pages/Profile";
 import MainPage from "./pages/MainPage";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated } = useAuth0();
 
-  const handleLogin = () => {
-    // This is a simple authentication. In a real app, you'd verify credentials against a backend.
-    setIsAuthenticated(true);
-  };
+  // const handleLogin = () => {
+  //   // This is a simple authentication. In a real app, you'd verify credentials against a backend.
+  //   setIsAuthenticated(true);
+  // };
 
   return (
     <Router>

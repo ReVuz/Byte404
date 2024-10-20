@@ -149,7 +149,7 @@ export default function MainPage() {
   ];
   const handleGetStarted = () => {
     // Option 1: Using window.location (works without any routing library)
-    window.location.href = "/login";
+    window.location.href = "/LoginButton";
 
     // Option 2: If using react-router-dom, comment out the above line and uncomment the next line
     // navigate('/login');
